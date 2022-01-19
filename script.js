@@ -28,38 +28,27 @@ const isValidEmail = (email) => {
   return re.test(String(email).toLowerCase()); // if the test is passed returns 'true', else 'false'
 };
 
+// Check Required:
+const checkRequired = (inputArr) => {
+  inputArr.forEach((input) => {
+    if (input.value.trim() === '') {
+      showError(input, `${getFieldName(input)} is Required`);
+    } else {
+      showSuccess(input);
+    }
+  });
+};
+
+// Get Field Name:
+const getFieldName = (input) => {
+  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+  // First letter of each input's id is changed to upper case and from second letter all letters are concatenated to it.
+};
+
 // EVENT LISTENERS:
 // Submit event listener on form:
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  // If no username is entered, corresponding error msg to be displayed, & border in red. Else, border to be shown in green:
-  if (username.value === '') {
-    showError(username, 'Username is required');
-  } else {
-    showSuccess(username);
-  }
-
-  // For email:
-  if (email.value === '') {
-    showError(email, 'Email is required');
-  } else if (!isValidEmail(email.value)) {
-    showError(email, 'Email is not valid');
-  } else {
-    showSuccess(email);
-  }
-
-  // For password:
-  if (password.value === '') {
-    showError(password, 'Password is required');
-  } else {
-    showSuccess(password);
-  }
-
-  // For password confirmation:
-  if (password2.value === '') {
-    showError(password2, 'Password is required');
-  } else {
-    showSuccess(password2);
-  }
+  checkRequired([username, email, password, password2]);
 });
