@@ -21,11 +21,17 @@ const showSuccess = (input) => {
   formControl.className = 'form-control success';
 };
 
-// Is Vaild Email:
-const isValidEmail = (email) => {
+// Check Email:
+const checkEmail = (input) => {
   const re =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase()); // if the test is passed returns 'true', else 'false'
+
+  if (re.test(input.value.trim())) {
+    // re.test returns true if passed, else false.
+    showSuccess(input);
+  } else {
+    showError(input, 'Email is not valid');
+  }
 };
 
 // Check Required:
@@ -37,6 +43,30 @@ const checkRequired = (inputArr) => {
       showSuccess(input);
     }
   });
+};
+
+// Check Length:
+const checkLength = (input, min, max) => {
+  if (input.value.length < min) {
+    showError(
+      input,
+      `${getFieldName(input)} must be atleast ${min} characters`
+    );
+  } else if (input.value.length > max) {
+    showError(
+      input,
+      `${getFieldName(input)} must be less than ${max} characters`
+    );
+  } else {
+    showSuccess(input);
+  }
+};
+
+// Check passwords match:
+const checkPasswordsMatch = (input1, input2) => {
+  if (input1.value !== input2.value) {
+    showError(input2, 'Passwords do not match');
+  }
 };
 
 // Get Field Name:
@@ -51,4 +81,8 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   checkRequired([username, email, password, password2]);
+  checkLength(username, 3, 15);
+  checkLength(password, 6, 25);
+  checkEmail(email);
+  checkPasswordsMatch(password, password2);
 });
