@@ -1,0 +1,102 @@
+/* Import Open Sans from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+/* Setting custom properties */
+:root {
+  --success-color: #2ecc71;
+  --error-color: #e74c3c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f9fafb;
+  font-family: 'Open Sans', sans-serif;
+
+  /* To align all the chidren elements of the body centered both horizontally & vertically, flex is used: */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 400px;
+}
+
+h2 {
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+.form {
+  padding: 30px 40px;
+}
+
+.form-control {
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  position: relative; /* Because, small tag will be position absolute inside form-control */
+}
+
+.form-control label {
+  color: #777;
+  display: block; /* By default label is displayed inline. To have it in the entire line and push input down, it is displayed as block */
+  margin-bottom: 5px;
+}
+
+.form-control input {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block; /* By default displayed inline */
+  width: 100%; /* To stretch across its container */
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-control input:focus {
+  outline: 0; /* To not to get default outline on clicking */
+  border-color: #777; /* To add specific border color we want on clicking */
+}
+
+/* If a form control has an additional class of 'success', border color to be changed to green. If has the additional class of 'error', border color to be changed to red. These class names are added later using JS. */
+.form-control.success input {
+  border-color: var(--success-color);
+}
+
+.form-control.error input {
+  border-color: var(--error-color);
+}
+
+.form-control small {
+  color: var(--error-color);
+  position: absolute; /* form-control is positioned relative, w.r.t which small tag will be absolutely positioned*/
+  bottom: 0;
+  left: 0;
+  visibility: hidden; /* Because, error msg to be shown only in case of any errors (handled using JS) */
+  display: none; /* this collapses anything around it and visibility hidden just makes it invisible*/
+}
+
+/* If the form-control has a class of 'error' small tag must be visbile */
+.form-control.error small {
+  visibility: visible;
+}
+
+.form button {
+  cursor: pointer;
+  background-color: #3498db;
+  border: 2px solid #3498db;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+}
